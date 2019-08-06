@@ -4,21 +4,8 @@ import { CsvFileReader } from "./CsvFileReader";
 
 type MatchData = [Date, string, string, number, number, MatchResult, string];
 
-interface DataReader {
-    read(): void;
-    data: string[][];
-}
-
-export class MatchReader {
-    matches: MatchData[] = [];
-    constructor(public reader: DataReader) {}
-
-    load(): void {
-        this.reader.read();
-        this.matches = this.reader.data.map(this.mapRow);
-    }
-    
-    private mapRow(row: string[]): MatchData {
+export class MatchReader extends CsvFileReader<MatchData> {
+    mapRow(row: string[]): MatchData {
             return [
                 dateStringToDate(row[0]),
                 row[1],
