@@ -1,17 +1,23 @@
-import { MatchData } from "./MatchData";
+import { MatchData } from './MatchData';
+import { WinsAnalysis } from './WinsAnalysis';
+import { HtmlReport } from './reportTargets/HtmlReport';
 
 export interface Analyzer {
-    run(matches: MatchData[]): string
+  run(matches: MatchData[]): string;
 }
 
 export interface OutputTarget {
-    output(report: string): void
+  output(report: string): void;
 }
 export class Summary {
-    constructor(public analyzer: Analyzer, public outputTarget: OutputTarget) {}
+  static winsAnalysisWithHtmlReport(team: string): Summary {
+    return new Summary(new WinsAnalysis(team), new HtmlReport());
+  }
 
-    buildAndPrintReport(matches: MatchData[]): void {
-        const analyzeResult = this.analyzer.run(matches);
-        this.outputTarget.output(analyzeResult);
-    }
+  constructor(public analyzer: Analyzer, public outputTarget: OutputTarget) {}
+
+  buildAndPrintReport(matches: MatchData[]): void {
+    const analyzeResult = this.analyzer.run(matches);
+    this.outputTarget.output(analyzeResult);
+  }
 }

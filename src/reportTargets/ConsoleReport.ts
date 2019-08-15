@@ -1,7 +1,7 @@
-import { OutputTarget } from "../Summary";
+import { OutputTarget } from '../Summary';
 
-export class ConsoleReport implements OutputTarget{
-    output(report: string) {
-        return console.log(report);
-    }
+export class ConsoleReport implements OutputTarget {
+  output(report: string) {
+    return console.log(report);
+  }
 }
